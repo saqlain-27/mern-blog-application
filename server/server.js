@@ -1,7 +1,6 @@
 import express from "express";
 import cors from "cors";
 import authRoutes from "./routes/authRoutes.js";
-import protectedRoutes from "./routes/protectedRoutes.js";
 import blogRoutes from "./routes/blogRoutes.js";
 import connectDB from "./config/db.js";
 import dotenv from "dotenv";
@@ -20,7 +19,6 @@ app.use(cors({
 app.use(express.json());
 
 app.use("/api/auth",authRoutes);
-app.use("/api/protected", protectedRoutes);
 app.use("/api/blogs",blogRoutes);
 
 app.listen(port,()=>{
