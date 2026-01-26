@@ -1,5 +1,6 @@
 import User from "../models/User.js";
 import jwt from "jsonwebtoken";
+import bcrypt from "bcrypt";
 
 export async function registerUser({ email, password }) {
   const exists = await User.findOne({email});
@@ -7,14 +8,23 @@ export async function registerUser({ email, password }) {
   if (exists) 
     return { ok: false, status: 400, message: "user already exists" };
 
-  await User.create({ email, password });
+  const hashedPassword = await bcrypt.hash(password,10);
+
+  await User.create({ email, 
+    password: hashedPassword });
+
   return { ok: true, status: 201, message: "User registered" };
 }
 
 export async function authenticateUser({ email, password }) {
   const user = await User.findOne({email});
 
-  if (!user || user.password !== password) 
+  if (!user) 
+    return { ok: false, status: 401, message: "Invalid credentials" };
+
+  const isMatch = await bcrypt.compare(password, user.password);
+
+  if(!isMatch)
     return { ok: false, status: 401, message: "Invalid credentials" };
 
   const token = jwt.sign(
