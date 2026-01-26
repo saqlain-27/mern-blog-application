@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { loginUser } from "../services/authService";
+import toast from "react-hot-toast";
 
 export default function Login(){
     const navigate = useNavigate();
@@ -13,19 +14,20 @@ export default function Login(){
         try{
             const res = await loginUser({email, password});
             console.log(res.data.message);
+            toast.success(res.data.message);
             if (res.status===200)
                 navigate("/dashboard");
         }
         catch(err){
             const errorMessage = err.response?.data?.message || err.message || "Login failed";
-            alert(errorMessage);
+            toast.error(errorMessage);
         }
 
     }
 
     return(
         
-        <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
+        <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4 pt-20">
 
             <form onSubmit={handleSubmit} className="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md transition-all duration-300 hover:shadow-2xl">
 

@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { registerUser } from "../services/authService"
 import { useNavigate } from "react-router-dom"
+import toast from "react-hot-toast"
 
 export default function Register(){
     const navigate = useNavigate();
@@ -11,17 +12,17 @@ export default function Register(){
         e.preventDefault();
         try{
             await registerUser({email,password})
-            alert("Registered Successfully");
+            toast.success("Registered Successfully");
             navigate("/");
         }
         catch(err){
-            alert(err.response?.data?.message || "Registration failed")
+            toast.error(err.response?.data?.message || "Registration failed");
         }
 
     }
 
     return(
-        <div className="min-h-screen bg-gradient-to-br from-cyan-50 to-blue-100 flex items-center justify-center p-4">
+        <div className="min-h-screen bg-gradient-to-br from-cyan-50 to-blue-100 flex items-center justify-center p-4 pt-20">
 
             <form onSubmit={handleSubmit} className="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md transition-all duration-300 hover:shadow-2xl">
 
