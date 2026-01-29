@@ -2,8 +2,8 @@ import axios from "axios";
 
 const API = import.meta.env.VITE_API_URL || "http://localhost:3000/api";
 
-export  const fetchBlogs = () =>{
-    return axios.get(`${API}/blogs`);
+export  const fetchBlogs = ({ page = 1, limit = 6 }) =>{
+    return axios.get(`${API}/blogs?page=${page}&limit=${limit}`);
 };
 
 export const createBlog = (data) => {
@@ -47,6 +47,24 @@ export const fetchBlogById = (id) =>{
 export const updateBlog = (id,data) => {
     const token = localStorage.getItem("token");
     return axios.patch(`${API}/blogs/${id}`, data, {
+        headers:{
+            Authorization: `Bearer ${token}`
+        }
+    });
+};
+
+export const toggleLike = (id) => {
+    const token = localStorage.getItem("token");
+    return axios.post(`${API}/blogs/${id}/like`,{},{
+        headers:{
+            Authorization: `Bearer ${token}`
+        }
+    });
+};
+
+export const addComment = (id, text) =>{
+    const token = localStorage.getItem("token");
+    return axios.post(`${API}/blogs/${id}/comment`, {text }, {
         headers:{
             Authorization: `Bearer ${token}`
         }

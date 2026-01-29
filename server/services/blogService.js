@@ -9,10 +9,23 @@ export async function createBlog({ title, content, userId }) {
     return blog;
 }
 
-export async function getAllBlogs() {
-    return Blog.find()
-    .populate("author","email")
-    .sort({createdAt: -1});    
+export async function getAllBlogs({ page = 1, limit = 6 }) {
+    const skip = (page - 1) * limit;
+    const [blogs , total] = await Promise.all([
+        Blog.find()
+        .populate("author","email")
+        .populate("comments.author", "email")
+        .sort({createdAt: -1})
+        .skip(skip)
+        .limit(limit),
+
+        Blog.countDocuments()
+    ]);
+    
+    return { blogs,
+        totalPages: Math.ceil(total / limit),
+        currentPage: page
+     };
 }
 
 export async function getMyBlogs(userId) {
@@ -22,6 +35,39 @@ export async function getMyBlogs(userId) {
 export async function getBlogById({ blogId, userId }) {
     return Blog.findOne({ _id: blogId, author: userId });
   }
+
+export async function toggleLike({blogId,userId}){
+    const blog = await Blog.findById(blogId);
+    if(!blog)
+        return null;
+
+    const alreadyLiked = blog.likes.includes(userId);
+
+    if(alreadyLiked)
+        blog.likes.pull(userId);
+    else
+        blog.likes.push(userId);
+
+    await blog.save();
+    return blog;
+}
+
+export async function addComment({blogId, userId, text}) {
+    const blog = await Blog.findById(blogId);
+    if(!blog)
+        return null;
+    blog.comments.push({
+        text,
+        author: userId
+    });
+
+    await blog.save();
+
+    const populatedBlog = await Blog.findById(blogId)
+        .populate("comments.author", "email");
+
+    return populatedBlog.comments.at(-1);
+}
 
 export async function updateBlog({ blogId, title, content, userId }) {
     const blog = await Blog.findOneAndUpdate(

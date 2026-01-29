@@ -25,22 +25,22 @@ export default function Navbar() {
                     </Link>
 
                     <div className="flex items-center gap-2 sm:gap-7 flex-wrap justify-center sm:justify-end w-full sm:w-auto">
-                        <Link to="/blogs"  className="px-2 py-2 sm:px-4 sm:py-2.5 rounded-xl text-sm font-semibold text-gray-700 hover:text-indigo-600 hover:bg-indigo-50/80 transition-all duration-300 transform hover:-translate-y-0.5 hover:shadow-sm">
+                        <Link to="/blogs"  className="px-2.5 py-2.5 sm:px-4 sm:py-2.5 rounded-lg text-xs sm:text-sm font-semibold text-gray-700 hover:text-indigo-600 hover:bg-indigo-50/80 transition-all duration-300 transform hover:-translate-y-0.5 hover:shadow-sm">
                             Blogs
                         </Link>
 
                         {token && (
                             <>
-                                <Link to="/dashboard" className="px-4 py-2.5 rounded-xl text-sm font-semibold text-gray-700 hover:text-indigo-600 hover:bg-indigo-50/80 transition-all duration-300 transform hover:-translate-y-0.5 hover:shadow-sm">
+                                <Link to="/dashboard" className="px-3 py-2.5 sm:px-4 sm:py-2.5 rounded-lg text-xs sm:text-sm font-semibold text-gray-700 hover:text-indigo-600 hover:bg-indigo-50/80 transition-all duration-300 transform hover:-translate-y-0.5 hover:shadow-sm">
                                     Dashboard
                                 </Link>
 
-                                <Link to="/create" className="px-4 py-2.5 rounded-xl text-sm font-semibold text-gray-700 hover:text-indigo-600 hover:bg-indigo-50/80 transition-all duration-300 transform hover:-translate-y-0.5 hover:shadow-sm">
+                                <Link to="/create" className="px-3 py-2.5 sm:px-4 sm:py-2.5 rounded-lg text-xs sm:text-sm font-semibold text-gray-700 hover:text-indigo-600 hover:bg-indigo-50/80 transition-all duration-300 transform hover:-translate-y-0.5 hover:shadow-sm">
                                     Write
                                 </Link>
 
                                 <button  onClick={handleLogout} 
-                                    className="px-5 py-2.5 rounded-xl text-sm font-semibold text-red-600 hover:text-red-700 hover:bg-red-50/80 transition-all duration-300 border border-red-200 hover:border-red-300 transform hover:-translate-y-0.5 hover:shadow-sm">
+                                    className="px-3.5 py-2.5 sm:px-5 sm:py-2.5 rounded-lg text-xs sm:text-sm font-semibold text-red-600 hover:text-red-700 hover:bg-red-50/80 transition-all duration-300 border border-red-200 hover:border-red-300 transform hover:-translate-y-0.5 hover:shadow-sm">
                                     Logout
                                 </button>
                             </>
