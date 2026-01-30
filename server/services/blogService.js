@@ -13,8 +13,8 @@ export async function getAllBlogs({ page = 1, limit = 6 }) {
     const skip = (page - 1) * limit;
     const [blogs , total] = await Promise.all([
         Blog.find()
-        .populate("author","username")
-        .populate("comments.author", "username")
+        .populate({path: "author", select: "username"})
+        .populate({path: "comments.author", select: "username"})
         .sort({createdAt: -1})
         .skip(skip)
         .limit(limit),
@@ -78,7 +78,7 @@ export async function addComment({blogId, userId, text}) {
     await blog.save();
 
     const populatedBlog = await Blog.findById(blogId)
-        .populate("comments.author", "username");
+        .populate({path: "comments.author", select: "username"});
 
     return populatedBlog.comments.at(-1);
 }
