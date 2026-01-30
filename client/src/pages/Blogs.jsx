@@ -141,7 +141,7 @@ export default function Blogs(){
                                 {blog.title}
                             </h2>
                             
-                            <p className="text-gray-300 text-sm leading-relaxed flex-grow mb-3 overflow-y-auto max-h-96">
+                            <p className="text-gray-300 text-sm leading-relaxed flex-grow mb-3 overflow-y-auto max-h-96 whitespace-pre-line break-words">
                                 {blog.content}
                             </p>
                             
@@ -180,7 +180,7 @@ export default function Blogs(){
                                             blog.comments.map((comment, index) => (
                                                 <div key={index} className="text-sm bg-slate-900/30 p-3 rounded-lg border border-slate-600/50">
                                                     <span className="font-medium text-cyan-300">
-                                                        {comment.author?.email || 'Anonymous'}
+                                                        {comment.author?.username || 'Anonymous'}
                                                     </span>
                                                     <p className="text-gray-300 mt-1">
                                                         {comment.text}
@@ -221,7 +221,7 @@ export default function Blogs(){
                                         </svg>
                                     </div>
                                     <span className="text-xs text-gray-400 font-medium truncate">
-                                        {blog.author?.email}
+                                        {blog.author?.username}
                                     </span>
                                 </div>
                             </div>

@@ -31,7 +31,14 @@ export const getAll = async (req, res) => {
 
 export const getMine = async (req, res) => {
     try {
-        const blogs = await getMyBlogs(req.user.userId);
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 6;
+
+        const blogs = await getMyBlogs({
+            userId: req.user.userId,
+            page,
+            limit
+        });
         res.json(blogs);
     } catch (error) {
         console.error(error);

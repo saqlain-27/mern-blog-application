@@ -2,9 +2,9 @@ import { registerUser, authenticateUser } from "../services/authService.js";
 
 export const register = async (req, res) => {
    try {
-    const { email, password } = req.body;
+    const { username, email, password } = req.body;
 
-    const result =await registerUser({ email, password });
+    const result =await registerUser({username, email, password });
    
     return res.status(result.status).json({ message: result.message });
    

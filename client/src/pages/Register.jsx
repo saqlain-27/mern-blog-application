@@ -5,13 +5,14 @@ import toast from "react-hot-toast"
 
 export default function Register(){
     const navigate = useNavigate();
+    const [username, setUsername] = useState("");
     const [email,setEmail] = useState("");
     const [password,setPassword] = useState("");
 
     const handleSubmit = async (e) =>{
         e.preventDefault();
         try{
-            await registerUser({email,password})
+            await registerUser({username, email, password});
             toast.success("Registered Successfully");
             navigate("/");
         }
@@ -22,7 +23,7 @@ export default function Register(){
     }
 
     return(
-        <div className="min-h-screen bg-gradient-to-br from-cyan-50 to-blue-100 flex items-center justify-center p-4 pt-24">
+        <div className="bg-gradient-to-br from-cyan-50 to-blue-100 flex justify-center min-h-[calc(100vh-4rem)] mt-16 p-4 items-start pt-8 sm:items-center sm:pt-4">
 
             <form onSubmit={handleSubmit} className="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md transition-all duration-300 hover:shadow-2xl">
 
@@ -37,42 +38,38 @@ export default function Register(){
                 </div>
 
                 <div className="mb-5">
-                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">Email</label>
-                    <input 
-                        id="email"
-                        type="email" 
-                        placeholder="your@email.com" 
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition duration-300" 
-                        onChange={(e)=> setEmail(e.target.value)} 
-                        required 
+                    <label htmlFor="username" className="block text-sm font-medium text-gray-700 mb-1">
+                        Username
+                    </label>
+                    <input id="username" type="text" placeholder="your_username"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition duration-300"
+                        onChange={(e) => setUsername(e.target.value)} required
                     />
+                </div>
+
+                <div className="mb-5">
+                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                    <input id="email" type="email" placeholder="your@email.com" 
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition duration-300" 
+                        onChange={(e)=> setEmail(e.target.value)} required />
                 </div>
 
                 <div className="mb-6">
                     <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">Password</label>
-                    <input 
-                        id="password"
-                        type="password" 
+                    <input id="password" type="password" 
                         className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition duration-300" 
                         placeholder="••••••••" 
-                        onChange={(e)=> setPassword(e.target.value)}
-                        required
-                    />
+                        onChange={(e)=> setPassword(e.target.value)} required/>
                 </div>
 
-                <button 
-                    type="submit"
-                    className="w-full bg-gradient-to-r from-cyan-600 to-blue-600 text-white py-3 rounded-lg font-semibold shadow-md hover:from-cyan-700 hover:to-blue-700 transform hover:-translate-y-0.5 transition duration-300 ease-in-out"
-                >
+                <button type="submit"
+                    className="w-full bg-gradient-to-r from-cyan-600 to-blue-600 text-white py-3 rounded-lg font-semibold shadow-md hover:from-cyan-700 hover:to-blue-700 transform hover:-translate-y-0.5 transition duration-300 ease-in-out">
                     Create Account
                 </button>
 
                 <div className="mt-6 text-center">
-                    <button 
-                        type="button" 
-                        onClick={() => navigate("/")} 
-                        className="text-cyan-600 hover:text-cyan-800 font-medium"
-                    >
+                    <button type="button" onClick={() => navigate("/")} 
+                        className="text-cyan-600 hover:text-cyan-800 font-medium">
                         Already have an account? <span className="underline">Sign in</span>
                     </button>
                 </div>

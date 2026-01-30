@@ -15,10 +15,10 @@ export const createBlog = (data) => {
     });
 };
 
-export const fetchMyBlogs = () =>{
+export const fetchMyBlogs = ({page = 1, limit = 6}) =>{
     const token = localStorage.getItem("token");
 
-    return axios.get(`${API}/blogs/me`,{
+    return axios.get(`${API}/blogs/me?page=${page}&limit=${limit}`,{
         headers:{
             Authorization: `Bearer ${token}`
         }

@@ -13,8 +13,8 @@ export async function getAllBlogs({ page = 1, limit = 6 }) {
     const skip = (page - 1) * limit;
     const [blogs , total] = await Promise.all([
         Blog.find()
-        .populate("author","email")
-        .populate("comments.author", "email")
+        .populate("author","username")
+        .populate("comments.author", "username")
         .sort({createdAt: -1})
         .skip(skip)
         .limit(limit),
@@ -28,8 +28,22 @@ export async function getAllBlogs({ page = 1, limit = 6 }) {
      };
 }
 
-export async function getMyBlogs(userId) {
-    return Blog.find({author: userId}).sort({createdAt: -1});
+export async function getMyBlogs({userId, page=1, limit=6}) {
+    const skip = (page - 1) * limit;
+    const [blogs, total] = await Promise.all([
+        Blog.find({author: userId})
+        .sort({createdAt: -1})
+        .skip(skip)
+        .limit(limit),
+
+        Blog.countDocuments({author: userId})
+    ]);
+
+    return  {
+        blogs,
+        totalPages: Math.ceil(total/limit),
+        currentPage: page
+    };
 }
 
 export async function getBlogById({ blogId, userId }) {
@@ -64,7 +78,7 @@ export async function addComment({blogId, userId, text}) {
     await blog.save();
 
     const populatedBlog = await Blog.findById(blogId)
-        .populate("comments.author", "email");
+        .populate("comments.author", "username");
 
     return populatedBlog.comments.at(-1);
 }

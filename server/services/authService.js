@@ -2,15 +2,23 @@ import User from "../models/User.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 
-export async function registerUser({ email, password }) {
-  const exists = await User.findOne({email});
+export async function registerUser({ username, email, password }) {
 
-  if (exists) 
-    return { ok: false, status: 400, message: "user already exists" };
+  const [emailExists, usernameExists] = await Promise.all([
+    User.findOne({ email }),
+    User.findOne({ username })
+  ]);
+  if (emailExists) 
+    return { ok: false, status: 400, message: "Email already exists" };
+
+  if (usernameExists) 
+    return { ok: false, status: 400, message: "Username already taken" };
 
   const hashedPassword = await bcrypt.hash(password,10);
 
-  await User.create({ email, 
+  await User.create({ 
+    username,
+    email, 
     password: hashedPassword });
 
   return { ok: true, status: 201, message: "User registered" };

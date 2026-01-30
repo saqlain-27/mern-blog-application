@@ -9,6 +9,8 @@ export default function Dashboard() {
   const [blogs,setBlogs] = useState([]);
   const [loading,setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
   const [showConfirm, setShowConfirm] = useState(false);
   const [selectedBlogId, setSelectedBlogId] = useState(null);
@@ -18,10 +20,13 @@ export default function Dashboard() {
     navigate("/");
   }
 
-  const loadBlogs = async () =>{
+  const loadBlogs = async (pageNumber = 1) =>{
     try {
-      const res = await fetchMyBlogs();
-      setBlogs(res.data); 
+      setLoading(true);
+      const res = await fetchMyBlogs({page: pageNumber, limit: 6});
+      setBlogs(res.data.blogs);
+      setPage(res.data.currentPage);
+      setTotalPages(res.data.totalPages);
     } catch (error) {
       console.error(error);
       setError(error.response?.data?.message || "Failed to load blogs");
@@ -138,7 +143,7 @@ export default function Dashboard() {
                 {blog.title}
               </h2>
 
-              <p className="flex-1 text-gray-300 text-sm leading-relaxed mb-3 overflow-y-auto max-h-96">
+              <p className="flex-1 text-gray-300 text-sm leading-relaxed mb-3 overflow-y-auto max-h-96 whitespace-pre-line break-words">
                 {blog.content}
               </p>
 
@@ -169,6 +174,23 @@ export default function Dashboard() {
           ))}
         </div>
       )}
+
+      <div className="flex justify-center items-center gap-3 sm:gap-6 mt-12 sm:mt-16">
+            <button disabled={page === 1} onClick={() => loadBlogs(page - 1)}
+              className="px-3 sm:px-8 py-1.5 sm:py-3 rounded-lg sm:rounded-xl bg-gradient-to-r from-cyan-500 to-blue-500 text-white text-xs sm:text-base font-medium shadow-lg disabled:opacity-50">
+              ← Prev
+            </button>
+
+            <span className="text-gray-200 font-semibold bg-gradient-to-r from-slate-700 to-slate-800 px-2 sm:px-6 py-1.5 sm:py-3 rounded-lg sm:rounded-xl text-xs sm:text-base border border-slate-600">
+              Page <span className="text-cyan-400">{page}</span> of{" "}
+              <span className="text-purple-400">{totalPages}</span>
+            </span>
+
+            <button disabled={page === totalPages} onClick={() => loadBlogs(page + 1)}
+              className="px-3 sm:px-8 py-1.5 sm:py-3 rounded-lg sm:rounded-xl bg-gradient-to-r from-purple-500 to-pink-500 text-white text-xs sm:text-base font-medium shadow-lg disabled:opacity-50">
+              Next →
+            </button>
+          </div>
 
       {showConfirm && (
         <div className="fixed inset-0 bg-black/70 flex items-center justify-center px-4 z-50">
