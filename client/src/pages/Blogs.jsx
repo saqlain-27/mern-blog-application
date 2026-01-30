@@ -94,10 +94,8 @@ export default function Blogs(){
               </div>
               <h3 className="text-xl font-semibold text-gray-800 mb-2">Oops!</h3>
               <p className="text-gray-600 mb-6">{error}</p>
-              <button 
-                onClick={() => window.location.reload()} 
-                className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors"
-              >
+              <button onClick={() => window.location.reload()} 
+                className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors">
                 Try Again
               </button>
             </div>
@@ -122,115 +120,110 @@ export default function Blogs(){
       }
 
       return(
-        <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 px-2 sm:px-4 py-10 pt-24 overflow-x-hidden">
+        <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 px-2 sm:px-4 py-10 pt-24 overflow-x-hidden">
             <div className="text-center mb-12">
-                <h1 className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 bg-clip-text text-transparent mb-3 leading-[2] pb-4 pt-2">
+                <h1 className="text-4xl sm:text-5xl font-bold bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-500 bg-clip-text text-transparent mb-3 leading-[2] pb-4 pt-2 drop-shadow-lg">
                     Latest Blogs
                 </h1>
-                <div className="w-24 h-1 bg-gradient-to-r from-indigo-500 to-purple-500 mx-auto rounded-full"></div>
+                <p className="text-gray-300 text-lg mb-6">Discover amazing stories and insights</p>
+                <div className="w-32 h-1.5 bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-500 mx-auto rounded-full shadow-lg"></div>
             </div>
 
-            <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 max-w-full">
+            <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 w-full px-1 sm:px-0">
                 {blogs.map(blog =>(
                     
-                    <div key={blog._id} className="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 p-6 flex flex-col border border-gray-100 hover:border-indigo-100"> 
+                    <div key={blog._id} className="group relative bg-gradient-to-br from-slate-800 to-slate-700 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 p-5 flex flex-col border border-slate-700 hover:border-cyan-400/50 overflow-hidden h-full">
+                        {/* Background gradient on hover */}
+                        <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl"></div>
                         
-                        <h2 className="text-xl font-bold text-gray-800 hover:text-indigo-600 transition-colors line-clamp-2 mb-4">
-                            {blog.title}
-                        </h2>
-                        
-                        <p className="text-gray-600 text-sm leading-relaxed flex-grow mb-4 whitespace-pre-line break-words">
-                            {blog.content}
-                        </p>
-                        
-                        {/* Likes and Comments Section */}
-                        <div className="flex items-center justify-between mb-3 pt-2">
-                            <div className="flex items-center space-x-3">
-                                {/* Like Button */}
-                                <button 
-                                    onClick={() => handleLike(blog._id)}
-                                    className="flex items-center space-x-1 px-3 py-1.5 rounded-full text-sm bg-gray-100 text-gray-600 hover:bg-red-100 hover:text-red-600 transition-colors"
-                                >
-                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-                                        <path fillRule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clipRule="evenodd" />
-                                    </svg>
-                                    <span>{typeof blog.likes === 'number' ? blog.likes : (blog.likes?.length || 0)}</span>
-                                </button>
+                        <div className="relative z-10 flex flex-col h-full">
+                            <h2 className="text-lg font-bold text-cyan-50 group-hover:text-cyan-300 transition-colors duration-200 line-clamp-2 mb-3">
+                                {blog.title}
+                            </h2>
+                            
+                            <p className="text-gray-300 text-sm leading-relaxed flex-grow mb-3 overflow-y-auto max-h-96">
+                                {blog.content}
+                            </p>
+                            
+                            {/* Likes and Comments Section */}
+                            <div className="flex items-center justify-between mb-3 pt-2 flex-wrap gap-2">
+                                <div className="flex items-center space-x-1.5">
+                                    {/* Like Button */}
+                                    <button onClick={() => handleLike(blog._id)}
+                                        className="flex items-center space-x-1 px-3 py-1.5 rounded-full text-xs sm:text-sm bg-gradient-to-r from-red-500/20 to-rose-500/20 text-red-300 hover:from-red-500/30 hover:to-rose-500/30 transition-colors duration-200 border border-red-500/30">
+                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                                            <path fillRule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clipRule="evenodd" />
+                                        </svg>
+                                        <span className="font-semibold">{typeof blog.likes === 'number' ? blog.likes : (blog.likes?.length || 0)}</span>
+                                    </button>
+                                    
+                                    {/* Comment Button */}
+                                    <button onClick={() => toggleComments(blog._id)}
+                                        className="flex items-center space-x-1 px-3 py-1.5 rounded-full text-xs sm:text-sm bg-gradient-to-r from-blue-500/20 to-cyan-500/20 text-blue-300 hover:from-blue-500/30 hover:to-cyan-500/30 transition-colors duration-200 border border-blue-500/30">
+                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                                            <path fillRule="evenodd" d="M18 5v8a2 2 0 01-2 2h-5l-5 4v-4H4a2 2 0 01-2-2V5a2 2 0 012-2h12a2 2 0 012 2zM7 8H5v2h2V8zm2 0h2v2H9V8zm6 0h-2v2h2V8z" clipRule="evenodd" />
+                                        </svg>
+                                        <span className="font-semibold">{blog.comments?.length || 0}</span>
+                                    </button>
+                                </div>
                                 
-                                {/* Comment Button */}
-                                <button 
-                                    onClick={() => toggleComments(blog._id)}
-                                    className="flex items-center space-x-1 px-3 py-1.5 rounded-full text-sm bg-gray-100 text-gray-600 hover:bg-blue-100 hover:text-blue-600 transition-colors"
-                                >
-                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-                                        <path fillRule="evenodd" d="M18 5v8a2 2 0 01-2 2h-5l-5 4v-4H4a2 2 0 01-2-2V5a2 2 0 012-2h12a2 2 0 012 2zM7 8H5v2h2V8zm2 0h2v2H9V8zm6 0h-2v2h2V8z" clipRule="evenodd" />
-                                    </svg>
-                                    <span>{blog.comments?.length || 0}</span>
-                                </button>
+                                <span className="text-xs text-gray-400 px-3 py-1.5 bg-slate-900/50 rounded-full">
+                                    {new Date(blog.createdAt).toLocaleDateString()}
+                                </span>
                             </div>
                             
-                            <span className="text-xs text-gray-400">
-                                {new Date(blog.createdAt).toLocaleDateString()}
-                            </span>
-                        </div>
-                        
-                        {/* Comments Section */}
-                        {expandedComments[blog._id] && (
-                            <div className="mb-4 border-t border-gray-100 pt-3">
-                                <div className="space-y-2 max-h-40 overflow-y-auto pr-1">
-                                    {blog.comments && blog.comments.length > 0 ? (
-                                        blog.comments.map((comment, index) => (
-                                            <div key={index} className="text-sm">
-                                                <span className="font-medium text-gray-700">
-                                                    {comment.author?.email || 'Anonymous'}:
-                                                </span>
-                                                <span className="text-gray-600 ml-2">
-                                                    {comment.text}
-                                                </span>
-                                            </div>
-                                        ))
-                                    ) : (
-                                        <p className="text-sm text-gray-500 italic">
-                                            No comments yet.
-                                        </p>
-                                    )}
+                            {/* Comments Section */}
+                            {expandedComments[blog._id] && (
+                                <div className="mb-4 border-t border-slate-600 pt-4">
+                                    <div className="space-y-3 max-h-48 overflow-y-auto pr-2 mb-3">
+                                        {blog.comments && blog.comments.length > 0 ? (
+                                            blog.comments.map((comment, index) => (
+                                                <div key={index} className="text-sm bg-slate-900/30 p-3 rounded-lg border border-slate-600/50">
+                                                    <span className="font-medium text-cyan-300">
+                                                        {comment.author?.email || 'Anonymous'}
+                                                    </span>
+                                                    <p className="text-gray-300 mt-1">
+                                                        {comment.text}
+                                                    </p>
+                                                </div>
+                                            ))
+                                        ) : (
+                                            <p className="text-sm text-gray-400 italic text-center py-2">
+                                                No comments yet. Be the first!
+                                            </p>
+                                        )}
+                                    </div>
+                                    
+                                    {/* Add Comment Form */}
+                                    <div className="pt-3 border-t border-slate-600">
+                                        <form onSubmit={(e) => {
+                                            e.preventDefault();
+                                            const input = e.target.comment;
+                                            handlePostComment(blog._id, input.value);
+                                            input.value = '';
+                                        }} className="flex space-x-2">
+                                            <input name="comment" type="text" placeholder="Share your thoughts..." 
+                                                className="flex-1 px-3 py-2 text-sm bg-slate-900/50 border border-slate-600 rounded-lg text-gray-200 placeholder-gray-500 focus:ring-2 focus:ring-cyan-400 focus:border-transparent outline-none transition-all"/>
+                                            <button type="submit"
+                                                className="px-4 py-2 bg-gradient-to-r from-cyan-500 to-blue-500 text-white rounded-lg text-sm font-medium hover:from-cyan-600 hover:to-blue-600 transition-all duration-300 shadow-lg">
+                                                Post
+                                            </button>
+                                        </form>
+                                    </div>
                                 </div>
-                                
-                                {/* Add Comment Form */}
-                                <div className="mt-3 pt-2 border-t border-gray-100">
-                                    <form onSubmit={(e) => {
-                                        e.preventDefault();
-                                        const input = e.target.comment;
-                                        handlePostComment(blog._id, input.value);
-                                        input.value = '';
-                                    }} className="flex space-x-2">
-                                        <input 
-                                            name="comment"
-                                            type="text" 
-                                            placeholder="Add a comment..." 
-                                            className="flex-1 px-2 py-1 text-sm border border-gray-200 rounded focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 outline-none"
-                                        />
-                                        <button 
-                                            type="submit"
-                                            className="px-3 py-1 bg-indigo-600 text-white rounded text-sm hover:bg-indigo-700 transition-colors"
-                                        >
-                                            Post
-                                        </button>
-                                    </form>
+                            )}
+                            
+                            <div className="pt-3 border-t border-slate-600">
+                                <div className="flex items-center space-x-2">
+                                    <div className="bg-gradient-to-br from-cyan-400 to-blue-500 rounded-full w-8 h-8 flex items-center justify-center">
+                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-white" viewBox="0 0 20 20" fill="currentColor">
+                                            <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
+                                        </svg>
+                                    </div>
+                                    <span className="text-xs text-gray-400 font-medium truncate">
+                                        {blog.author?.email}
+                                    </span>
                                 </div>
-                            </div>
-                        )}
-                        
-                        <div className="pt-2 border-t border-gray-100">
-                            <div className="flex items-center space-x-2">
-                                <div className="bg-gray-200 rounded-full w-8 h-8 flex items-center justify-center">
-                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-gray-600" viewBox="0 0 20 20" fill="currentColor">
-                                        <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
-                                    </svg>
-                                </div>
-                                <span className="text-xs text-gray-500 font-medium truncate">
-                                    {blog.author?.email}
-                                </span>
                             </div>
                         </div>
                     
@@ -238,17 +231,17 @@ export default function Blogs(){
                 ))}
             </div>
             
-            <div className="flex justify-center items-center gap-6 mt-12">
-              <button disabled={page === 1} onClick={() => loadBlogs(page - 1)} className="px-6 py-2 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-medium shadow-md hover:from-indigo-700 hover:to-purple-700 disabled:opacity-50 transition-all duration-300 transform hover:-translate-y-0.5 hover:shadow-lg">
-                Prev
+            <div className="flex justify-center items-center gap-3 sm:gap-6 mt-12 sm:mt-16">
+              <button disabled={page === 1} onClick={() => loadBlogs(page - 1)} className="px-3 sm:px-8 py-1.5 sm:py-3 rounded-lg sm:rounded-xl bg-gradient-to-r from-cyan-500 to-blue-500 text-white text-xs sm:text-base sm:font-semibold font-medium shadow-lg hover:from-cyan-600 hover:to-blue-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 hover:shadow-xl border border-cyan-400/30">
+                ← Prev
               </button>
 
-              <span className="text-gray-700 font-semibold bg-white px-4 py-2 rounded-lg shadow-sm border border-gray-200">
-                Page {page} of {totalPages}
+              <span className="text-gray-200 font-semibold bg-gradient-to-r from-slate-700 to-slate-800 px-2 sm:px-6 py-1.5 sm:py-3 rounded-lg sm:rounded-xl shadow-md text-xs sm:text-base border border-slate-600">
+                Page <span className="text-cyan-400">{page}</span> of <span className="text-purple-400">{totalPages}</span>
               </span>
 
-              <button disabled={page === totalPages} onClick={() => loadBlogs(page + 1)} className="px-6 py-2 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-medium shadow-md hover:from-indigo-700 hover:to-purple-700 disabled:opacity-50 transition-all duration-300 transform hover:-translate-y-0.5 hover:shadow-lg">
-                Next
+              <button disabled={page === totalPages} onClick={() => loadBlogs(page + 1)} className="px-3 sm:px-8 py-1.5 sm:py-3 rounded-lg sm:rounded-xl bg-gradient-to-r from-purple-500 to-pink-500 text-white text-xs sm:text-base sm:font-semibold font-medium shadow-lg hover:from-purple-600 hover:to-pink-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 hover:shadow-xl border border-purple-400/30">
+                Next →
               </button>
             </div>
         </div>
