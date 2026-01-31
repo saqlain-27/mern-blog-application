@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { fetchBlogs, toggleLike, addComment } from "../services/blogService";
+import toast from "react-hot-toast";
 
 export default function Blogs(){
     const [blogs, setBlogs] = useState([]);
@@ -36,7 +37,8 @@ export default function Blogs(){
                 )
             );
         } catch (error) {
-            console.error('Error liking blog:', error);
+            const msg = error.response?.data?.message || "Something went wrong";
+            toast.error(msg);
         }
     };
 
@@ -64,7 +66,8 @@ export default function Blogs(){
                 )
             );
         } catch (error) {
-            console.error('Error posting comment:', error);
+            const msg = error.response?.data?.message || "Something went wrong";
+            toast.error(msg);         
         }
     };
 
@@ -74,10 +77,14 @@ export default function Blogs(){
 
     if (loading) {
         return (
-          <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center pt-24">
-            <div className="text-center">
-              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600 mx-auto mb-4"></div>
-              <p className="text-gray-600 font-medium">Loading blogs...</p>
+          <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center pt-24 px-4">
+            <div className="bg-gradient-to-br from-slate-800 to-slate-700 border border-slate-600 rounded-xl p-8 shadow-xl text-center">
+              
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-cyan-400 mx-auto mb-4"></div>
+              
+              <p className="text-gray-300 font-medium">
+                Loading blogs...
+              </p>
             </div>
           </div>
         );
@@ -85,17 +92,20 @@ export default function Blogs(){
 
       if (error) {
         return (
-          <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center pt-24">
-            <div className="text-center bg-white rounded-xl p-8 shadow-lg max-w-md mx-4">
-              <div className="bg-red-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-red-600" viewBox="0 0 20 20" fill="currentColor">
+          <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center pt-24 px-4">
+            <div className="bg-gradient-to-br from-slate-800 to-slate-700 border border-red-500/40 rounded-xl p-8 shadow-xl max-w-md text-center">
+              
+              <div className="bg-red-500/20 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4 border border-red-500/30">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-red-400" viewBox="0 0 20 20" fill="currentColor">
                   <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
                 </svg>
               </div>
-              <h3 className="text-xl font-semibold text-gray-800 mb-2">Oops!</h3>
-              <p className="text-gray-600 mb-6">{error}</p>
-              <button onClick={() => window.location.reload()} 
-                className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors">
+      
+              <h3 className="text-xl font-semibold text-red-300 mb-2">Oops!</h3>
+              <p className="text-gray-300 mb-6">{error}</p>
+      
+              <button onClick={() => window.location.reload()}
+                className="px-4 py-2 bg-gradient-to-r from-cyan-500 to-blue-500 text-white rounded-lg hover:from-cyan-600 hover:to-blue-600 transition-all shadow-lg">
                 Try Again
               </button>
             </div>
@@ -105,15 +115,22 @@ export default function Blogs(){
 
       if (!blogs.length) {
         return (
-          <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center pt-24">
-            <div className="text-center bg-white rounded-xl p-8 shadow-lg max-w-md mx-4">
-              <div className="bg-gray-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+          <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center pt-24 px-4">
+            <div className="bg-gradient-to-br from-slate-800 to-slate-700 border border-slate-600 rounded-xl p-8 shadow-xl max-w-md text-center">
+              
+              <div className="bg-slate-900/50 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4 border border-slate-600">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-cyan-400" viewBox="0 0 20 20" fill="currentColor">
                   <path d="M9 4.804A7.968 7.968 0 005.5 4c-1.255 0-2.443.29-3.5.804v10A7.969 7.969 0 015.5 14c1.669 0 3.218.51 4.5 1.385A7.962 7.962 0 0114.5 14c1.255 0 2.443.29 3.5.804v-10A7.968 7.968 0 0014.5 4c-1.255 0-2.443.29-3.5.804V12a1 1 0 11-2 0V4.804z" />
                 </svg>
               </div>
-              <h3 className="text-xl font-semibold text-gray-800 mb-2">No Blogs Found</h3>
-              <p className="text-gray-600">Be the first to share your thoughts with the world!</p>
+      
+              <h3 className="text-xl font-semibold text-cyan-300 mb-2">
+                No Blogs Found
+              </h3>
+      
+              <p className="text-gray-400">
+                Be the first to share your thoughts with the world!
+              </p>
             </div>
           </div>
         );
