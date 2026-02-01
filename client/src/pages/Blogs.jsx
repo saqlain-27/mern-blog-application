@@ -197,7 +197,7 @@ export default function Blogs(){
                                             blog.comments.map((comment, index) => (
                                                 <div key={index} className="text-sm bg-slate-900/30 p-3 rounded-lg border border-slate-600/50">
                                                     <span className="font-medium text-cyan-300">
-                                                        {comment.author?.username || 'Anonymous'}
+                                                        @{comment.author?.username || 'Anonymous'}
                                                     </span>
                                                     <p className="text-gray-300 mt-1">
                                                         {comment.text}
@@ -248,19 +248,21 @@ export default function Blogs(){
                 ))}
             </div>
             
-            <div className="flex justify-center items-center gap-3 sm:gap-6 mt-12 sm:mt-16">
-              <button disabled={page === 1} onClick={() => loadBlogs(page - 1)} className="px-3 sm:px-8 py-1.5 sm:py-3 rounded-lg sm:rounded-xl bg-gradient-to-r from-cyan-500 to-blue-500 text-white text-xs sm:text-base sm:font-semibold font-medium shadow-lg hover:from-cyan-600 hover:to-blue-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 hover:shadow-xl border border-cyan-400/30">
-                ← Prev
-              </button>
-
-              <span className="text-gray-200 font-semibold bg-gradient-to-r from-slate-700 to-slate-800 px-2 sm:px-6 py-1.5 sm:py-3 rounded-lg sm:rounded-xl shadow-md text-xs sm:text-base border border-slate-600">
-                Page <span className="text-cyan-400">{page}</span> of <span className="text-purple-400">{totalPages}</span>
-              </span>
-
-              <button disabled={page === totalPages} onClick={() => loadBlogs(page + 1)} className="px-3 sm:px-8 py-1.5 sm:py-3 rounded-lg sm:rounded-xl bg-gradient-to-r from-purple-500 to-pink-500 text-white text-xs sm:text-base sm:font-semibold font-medium shadow-lg hover:from-purple-600 hover:to-pink-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 hover:shadow-xl border border-purple-400/30">
-                Next →
-              </button>
-            </div>
+            {totalPages > 1 && (
+                    <div className="flex justify-center items-center gap-3 sm:gap-6 mt-12 sm:mt-16">
+                        <button disabled={page === 1} onClick={() => loadBlogs(page - 1)} className="px-3 sm:px-8 py-1.5 sm:py-3 rounded-lg sm:rounded-xl bg-gradient-to-r from-cyan-500 to-blue-500 text-white text-xs sm:text-base sm:font-semibold font-medium shadow-lg hover:from-cyan-600 hover:to-blue-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 hover:shadow-xl border border-cyan-400/30">
+                            ← Prev
+                        </button>
+              
+                        <span className="text-gray-200 font-semibold bg-gradient-to-r from-slate-700 to-slate-800 px-2 sm:px-6 py-1.5 sm:py-3 rounded-lg sm:rounded-xl shadow-md text-xs sm:text-base border border-slate-600">
+                              Page <span className="text-cyan-400">{page}</span> of <span className="text-purple-400">{totalPages}</span>
+                        </span>
+              
+                        <button disabled={page === totalPages} onClick={() => loadBlogs(page + 1)} className="px-3 sm:px-8 py-1.5 sm:py-3 rounded-lg sm:rounded-xl bg-gradient-to-r from-purple-500 to-pink-500 text-white text-xs sm:text-base sm:font-semibold font-medium shadow-lg hover:from-purple-600 hover:to-pink-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 hover:shadow-xl border border-purple-400/30">
+                            Next →
+                        </button>
+                    </div>
+            )}
         </div>
       );
 }
