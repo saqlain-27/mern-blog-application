@@ -115,7 +115,7 @@ cd BlogApplication
 ```bash
 cd server
 npm install
-npm run dev
+node server.js
 ```
 
 Create **server/.env**
@@ -124,6 +124,7 @@ Create **server/.env**
 PORT=3000
 MONGO_URI=your_mongodb_connection_string
 JWT_SECRET=your_secret_key
+JWT_EXPIRES_IN=1d
 CLIENT_URL=http://localhost:5173
 ```
 

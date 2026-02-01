@@ -23,7 +23,7 @@ export async function getAllBlogs({ page = 1, limit = 6 }) {
     ]);
     
     return { blogs,
-        totalPages: Math.ceil(total / limit),
+        totalPages: Math.max(1,Math.ceil(total / limit)),
         currentPage: page
      };
 }
@@ -41,7 +41,7 @@ export async function getMyBlogs({userId, page=1, limit=6}) {
 
     return  {
         blogs,
-        totalPages: Math.ceil(total/limit),
+        totalPages: Math.max(1,Math.ceil(total/limit)),
         currentPage: page
     };
 }
